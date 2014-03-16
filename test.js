@@ -7,3 +7,9 @@ it('should get the arguments of a function', function () {
 	assert.deepEqual(fnArgs(function () {}), []);
 	assert.deepEqual(fnArgs(function(){console.log('hello')}), []);
 });
+
+it('should throw if wrong type', function () {
+	assert.throws(function () {
+		fnArgs('');
+	});
+});

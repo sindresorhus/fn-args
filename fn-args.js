@@ -11,6 +11,10 @@
 	var reFnArgs = /\(([^)]*)\)/;
 
 	var fnArgs = function (fn) {
+		if (typeof fn !== 'function') {
+			throw new TypeError('Expected a function');
+		}
+
 		var match = reFnArgs.exec(fn.toString());
 
 		return match && match[1].length > 0 ? match[1].split(',').map(function (el) {
