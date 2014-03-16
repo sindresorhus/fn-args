@@ -14,6 +14,10 @@
 		if (typeof fn !== 'function') {
 			throw new TypeError('Expected a function');
 		}
+		
+		if (fn.length === 0) {
+			return [];
+		}
 
 		var match = reFnArgs.exec(fn.toString());
 
