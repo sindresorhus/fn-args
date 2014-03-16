@@ -8,7 +8,7 @@
 (function () {
 	'use strict';
 
-	var reFnArgs = /\(([^)]+)\)/;
+	var reFnArgs = /^function\s*[^(]*\(([^)]+)\)/;
 
 	var fnArgs = function (fn) {
 		var match = reFnArgs.exec(fn.toString());
