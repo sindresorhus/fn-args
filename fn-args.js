@@ -15,6 +15,10 @@
 			throw new TypeError('Expected a function');
 		}
 
+		if (!fn.length) {
+			return [];
+		}
+
 		var match = reFnArgs.exec(fn.toString());
 
 		return match && match[1].length > 0 ? match[1].split(',').map(function (el) {
