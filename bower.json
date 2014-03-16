@@ -1,0 +1,26 @@
+{
+  "name": "fn-args",
+  "version": "0.0.0",
+  "description": "Get the arguments of a function",
+  "license": "MIT",
+  "main": "fn-args.js",
+  "authors": [{
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  }],
+  "keywords": [
+    "fn",
+    "function",
+    "args",
+    "arguments",
+    "tostring",
+    "extract"
+  ],
+  "ignore": [
+    ".*",
+    "component.json",
+    "package.json",
+    "test.js"
+  ]
+}
