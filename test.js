@@ -5,4 +5,5 @@ var fnArgs = require('./fn-args');
 it('should get the arguments of a function', function () {
 	assert.deepEqual(fnArgs(function (foo, bar) {}), ['foo', 'bar']);
 	assert.deepEqual(fnArgs(function () {}), []);
+	assert.deepEqual(fnArgs(function(){console.log('hello')}), []);
 });

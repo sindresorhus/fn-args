@@ -8,12 +8,12 @@
 (function () {
 	'use strict';
 
-	var reFnArgs = /\(([^)]+)\)/;
+	var reFnArgs = /\(([^)]*)\)/;
 
 	var fnArgs = function (fn) {
 		var match = reFnArgs.exec(fn.toString());
 
-		return match ? match[1].split(',').map(function (el) {
+		return match && match[1].length > 0 ? match[1].split(',').map(function (el) {
 			return el.trim();
 		}) : [];
 	};
