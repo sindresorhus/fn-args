@@ -8,6 +8,7 @@
 (function () {
 	'use strict';
 
+	var reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg; // from https://github.com/jrburke/requirejs
 	var reFnArgs = /^function\s*[^(]*\(([^)]+)\)/;
 
 	var fnArgs = function (fn) {
@@ -19,7 +20,7 @@
 			return [];
 		}
 
-		var match = reFnArgs.exec(fn.toString());
+		var match = reFnArgs.exec(fn.toString().replace(reComments, ''));
 
 		return match ? match[1].split(',').map(function (el) {
 			return el.trim();
