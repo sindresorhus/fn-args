@@ -1,6 +1,6 @@
 {
   "name": "fn-args",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Get the arguments of a function",
   "license": "MIT",
   "repository": "sindresorhus/fn-args",
