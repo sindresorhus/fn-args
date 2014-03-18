@@ -8,7 +8,9 @@
 (function () {
 	'use strict';
 
-	var reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg; // from https://github.com/jrburke/requirejs
+	// from https://github.com/jrburke/requirejs
+	var reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+
 	var reFnArgs = /^function\s*[^(]*\(([^)]+)\)/;
 
 	var fnArgs = function (fn) {
