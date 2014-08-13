@@ -5,18 +5,8 @@
 
 ## Install
 
-Download [manually](https://github.com/sindresorhus/fn-args/releases) or with a package-manager.
-
-```bash
+```sh
 $ npm install --save fn-args
-```
-
-```bash
-$ bower install --save fn-args
-```
-
-```bash
-$ component install sindresorhus/fn-args
 ```
 
 
@@ -32,4 +22,4 @@ fnArgs(fn);
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)

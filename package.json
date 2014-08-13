@@ -4,7 +4,6 @@
   "description": "Get the arguments of a function",
   "license": "MIT",
   "repository": "sindresorhus/fn-args",
-  "main": "fn-args.js",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
@@ -17,7 +16,7 @@
     "test": "mocha"
   },
   "files": [
-    "fn-args.js"
+    "index.js"
   ],
   "keywords": [
     "fn",
