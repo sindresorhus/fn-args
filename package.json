@@ -10,10 +10,10 @@
     "url": "http://sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --harmony"
   },
   "files": [
     "index.js"
@@ -27,6 +27,7 @@
     "extract"
   ],
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "semver": "5.3.0"
   }
 }
