@@ -1,12 +1,13 @@
 'use strict';
-var assert = require('assert');
-var semver = require('semver');
-var fnArgs = require('./');
+/* eslint-env mocha */
+const assert = require('assert');
+const semver = require('semver');
+const m = require('./');
 
-it('should get the arguments of a function', function () {
-	assert.deepEqual(fnArgs(function (foo, bar) {}), ['foo', 'bar']);
+it('function', () => {
+	assert.deepEqual(m(function (foo, bar) {}), ['foo', 'bar']);
 
-	assert.deepEqual(fnArgs(function /* something */may(
+	assert.deepEqual(m(function /* something */may(
 		// go,
 		go,
 		/* wrong, */
@@ -14,14 +15,14 @@ it('should get the arguments of a function', function () {
 		// (when, using, comments) {}
 	){}), ['go', 'here']);
 
-	assert.deepEqual(fnArgs(function () {}), []);
-	assert.deepEqual(fnArgs(function(){console.log('hello')}), []);
+	assert.deepEqual(m(function () {}), []);
+	assert.deepEqual(m(function(){console.log('hello')}), []);
 });
 
-it('should get the arguments of a generatorFunction', function () {
-	assert.deepEqual(fnArgs(function* (foo, bar) {}), ['foo', 'bar']);
+it('generator function', () => {
+	assert.deepEqual(m(function * (foo, bar) {}), ['foo', 'bar']);
 
-	assert.deepEqual(fnArgs(function* /* something */may(
+	assert.deepEqual(m(function* /* something */may(
 		// go,
 		go,
 		/* wrong, */
@@ -29,13 +30,13 @@ it('should get the arguments of a generatorFunction', function () {
 		// (when, using, comments) {}
 	){}), ['go', 'here']);
 
-	assert.deepEqual(fnArgs(function* () {}), []);
-	assert.deepEqual(fnArgs(function*(){console.log('hello')}), []);
+	assert.deepEqual(m(function* () {}), []);
+	assert.deepEqual(m(function*(){console.log('hello')}), []);
 });
 
-it('should throw if wrong type', function () {
-	assert.throws(function () {
-		fnArgs('');
+it('throws if wrong type', () => {
+	assert.throws(() => {
+		m('');
 	});
 });
 

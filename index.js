@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (fn) {
+module.exports = fn => {
 	if (typeof fn !== 'function') {
 		throw new TypeError('Expected a function');
 	}
@@ -8,14 +8,9 @@ module.exports = function (fn) {
 		return [];
 	}
 
-	// from https://github.com/jrburke/requirejs
-	var reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+	const reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+	const reFnArgs = /^(?:async )?function\s*[^(]*\(([^)]+)\)/;
+	const match = reFnArgs.exec(fn.toString().replace(reComments, ''));
 
-	var reFnArgs = /^(async )?function\s*[^(]*\(([^)]+)\)/;
-
-	var match = reFnArgs.exec(fn.toString().replace(reComments, ''));
-
-	return match ? match[2].split(',').map(function (el) {
-		return el.trim();
-	}) : [];
+	return match ? match[1].split(',').map(x => x.trim()) : [];
 };

@@ -1,33 +1,44 @@
 {
   "name": "fn-args",
   "version": "1.0.0",
-  "description": "Get the arguments of a function",
+  "description": "Get the arguments of a function, generator function, async function",
   "license": "MIT",
   "repository": "sindresorhus/fn-args",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
+    "url": "sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4"
   },
   "scripts": {
-    "test": "mocha --harmony"
+    "test": "xo && mocha --harmony"
   },
   "files": [
     "index.js"
   ],
   "keywords": [
-    "fn",
     "function",
-    "args",
     "arguments",
+    "fn",
+    "func",
+    "args",
     "tostring",
-    "extract"
+    "extract",
+    "parse",
+    "generator",
+    "async"
   ],
   "devDependencies": {
     "mocha": "*",
-    "semver": "5.3.0"
+    "semver": "^5.3.0",
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true,
+    "ignores": [
+      "test*.js"
+    ]
   }
 }

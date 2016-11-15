@@ -1,12 +1,12 @@
 'use strict';
+/* eslint-env mocha */
+const assert = require('assert');
+const m = require('./');
 
-var assert = require('assert');
-var fnArgs = require('./');
+it('async function', () => {
+	assert.deepEqual(m(async function (foo, bar) {}), ['foo', 'bar']);
 
-it('should get the arguments of a async function', function () {
-	assert.deepEqual(fnArgs(async function (foo, bar) {}), ['foo', 'bar']);
-
-	assert.deepEqual(fnArgs(async function /* something */may(
+	assert.deepEqual(m(async function /* something */may(
 		// go,
 		go,
 		/* wrong, */
@@ -14,6 +14,6 @@ it('should get the arguments of a async function', function () {
 		// (when, using, comments) {}
 	){}), ['go', 'here']);
 
-	assert.deepEqual(fnArgs(async function () {}), []);
-	assert.deepEqual(fnArgs(async function(){console.log('hello')}), []);
+	assert.deepEqual(m(async function () {}), []);
+	assert.deepEqual(m(async function(){console.log('hello')}), []);
 });

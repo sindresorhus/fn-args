@@ -1,11 +1,11 @@
 # fn-args [![Build Status](https://travis-ci.org/sindresorhus/fn-args.svg?branch=master)](https://travis-ci.org/sindresorhus/fn-args)
 
-> Get the arguments of a function/generatorFunction/asyncFunction
+> Get the arguments of a function, generator function, async function
 
 
 ## Install
 
-```sh
+```
 $ npm install --save fn-args
 ```
 
@@ -13,23 +13,19 @@ $ npm install --save fn-args
 ## Usage
 
 ```js
-var fn = function (foo, bar) {};
+const fnArgs = require('fn-args');
 
-fnArgs(fn);
+fnArgs(function (foo, bar) {});
 //=> ['foo', 'bar']
 
-fn = function* (foo, bar) {};
-
-fnArgs(fn);
+fnArgs(function * (foo, bar) {});
 //=> ['foo', 'bar']
 
-fn = async function (foo, bar) {};
-
-fnArgs(fn);
+fnArgs(async function (foo, bar) {});
 //=> ['foo', 'bar']
 ```
 
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
