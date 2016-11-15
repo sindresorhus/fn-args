@@ -11,11 +11,11 @@ module.exports = function (fn) {
 	// from https://github.com/jrburke/requirejs
 	var reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
 
-	var reFnArgs = /^function\s*[^(]*\(([^)]+)\)/;
+	var reFnArgs = /^(async )?function\s*[^(]*\(([^)]+)\)/;
 
 	var match = reFnArgs.exec(fn.toString().replace(reComments, ''));
 
-	return match ? match[1].split(',').map(function (el) {
+	return match ? match[2].split(',').map(function (el) {
 		return el.trim();
 	}) : [];
 };
