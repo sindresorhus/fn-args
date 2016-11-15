@@ -34,6 +34,23 @@ it('generator function', () => {
 	assert.deepEqual(m(function*(){console.log('hello')}), []);
 });
 
+it('arrow function', () => {
+	assert.deepEqual(m((foo, bar) => {}), ['foo', 'bar']);
+	assert.deepEqual(m(( foo ) => {}), ['foo']);
+	assert.deepEqual(m(foo=>{}), ['foo']);
+
+	assert.deepEqual(m(/* something */(
+		// go,
+		go,
+		/* wrong, */
+		here
+		// (when, using, comments) {}
+	)=>{}), ['go', 'here']);
+
+	assert.deepEqual(m(() => {}), []);
+	assert.deepEqual(m(()=>{console.log('hello')}), []);
+});
+
 it('throws if wrong type', () => {
 	assert.throws(() => {
 		m('');

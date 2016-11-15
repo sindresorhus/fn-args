@@ -9,8 +9,12 @@ module.exports = fn => {
 	}
 
 	const reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
-	const reFnArgs = /^(?:async )?function\s*[^(]*\(([^)]+)\)/;
+
+	// the first part matches parens-less arrow functions
+	// the second part matches the rest
+	const reFnArgs = /^(?:async)?([^=()]+)=|\(([^)]+)\)/;
+
 	const match = reFnArgs.exec(fn.toString().replace(reComments, ''));
 
-	return match ? match[1].split(',').map(x => x.trim()) : [];
+	return match ? (match[1] || match[2]).split(',').map(x => x.trim()) : [];
 };

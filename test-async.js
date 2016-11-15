@@ -5,6 +5,8 @@ const m = require('./');
 
 it('async function', () => {
 	assert.deepEqual(m(async function (foo, bar) {}), ['foo', 'bar']);
+	assert.deepEqual(m(async (foo, bar) => {}), ['foo', 'bar']);
+	assert.deepEqual(m(async foo => {}), ['foo']);
 
 	assert.deepEqual(m(async function /* something */may(
 		// go,

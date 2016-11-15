@@ -1,7 +1,7 @@
 {
   "name": "fn-args",
   "version": "1.0.0",
-  "description": "Get the arguments of a function, generator function, async function",
+  "description": "Get the arguments of a function, arrow function, generator function, async function",
   "license": "MIT",
   "repository": "sindresorhus/fn-args",
   "author": {
@@ -28,7 +28,8 @@
     "extract",
     "parse",
     "generator",
-    "async"
+    "async",
+    "arrow"
   ],
   "devDependencies": {
     "mocha": "*",
