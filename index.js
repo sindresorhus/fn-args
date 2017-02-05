@@ -14,9 +14,7 @@ module.exports = (fn) => {
 	const fnNC = fn.toString().replace(reComments, ""); /* fn with no comments */
 
 	let
-		p1Depth = 0, /* () */
-		p2Depth = 0, /* [] */
-		p3Depth = 0, /* {} */
+		depth = 0, /* () [] {} */
 		fnND = "",   /* fn with no default values */
 		i = 0;
 
@@ -37,11 +35,7 @@ module.exports = (fn) => {
 
 		/* if we found a default value - skip it */
 		if (fnNC.charAt(i) === "=") {
-			for (; i < fnNC.length
-				&& (p1Depth !== 0
-					|| p2Depth !== 0
-					|| p3Depth !== 0
-					|| (fnNC.charAt(i) !== "," && fnNC.charAt(i) !== ")")); i += 1) {
+			for (; i < fnNC.length && (depth !== 0 || fnNC.charAt(i) !== "," && fnNC.charAt(i) !== ")"); i += 1) {
 
 				/* skip all quotes */
 				let wasQuote = false;
@@ -64,22 +58,14 @@ module.exports = (fn) => {
 
 				switch (fnNC.charAt(i)) { /* keeps right depths of all types of parenthesises */
 				case "(":
-					p1Depth += 1;
+				case "[":
+				case "{":
+					depth += 1;
 					break;
 				case ")":
-					p1Depth -= 1;
-					break;
-				case "[":
-					p2Depth += 1;
-					break;
 				case "]":
-					p2Depth -= 1;
-					break;
-				case "{":
-					p3Depth += 1;
-					break;
 				case "}":
-					p3Depth -= 1;
+					depth -= 1;
 				}
 			}
 
