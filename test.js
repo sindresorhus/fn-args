@@ -57,6 +57,23 @@ it('throws if wrong type', () => {
 	});
 });
 
+it('rest parameter', () => {
+	assert.deepEqual(m((...args) => {}), ['...args']);
+	assert.deepEqual(m((arg1, arg2,...args) => {}), ['arg1', 'arg2', '...args']);
+});
+
+it('removes default values', () => {
+	assert.deepEqual(m((foo = 2, bar = false) => {}), ['foo', 'bar']);
+	assert.deepEqual(m((foo = {
+		key1 : [1, 2, 3],
+		key2 : [4, 5, 6]
+	}, bar = "(, , , )") => {}), ['foo', 'bar']);
+
+	assert.deepEqual(m((foo = ")", bar) => {}), ['foo', 'bar']);
+	assert.deepEqual(m((foo = `${"test"}`, bar={str:'?" " " ", , '}) => {}), ['foo', 'bar']);
+	assert.deepEqual(m((foo = /\w\W\w/gi) => {}), ['foo']);
+});
+
 if (semver.gt(process.versions.node, '7.0.0')) {
 	require('./test-async');
 }
