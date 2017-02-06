@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = fn => {
 	if (typeof fn !== 'function') {
 		throw new TypeError('Expected a function');
@@ -84,7 +83,7 @@ module.exports = fn => {
 		fnND += ')';
 	}
 
-	// the first part matches parenthesises-less arrow functions
+	// the first part matches parens-less arrow functions
 	// the second part matches the rest
 	const reFnArgs = /^(?:async)?([^=()]+)=|\(([^)]+)\)/;
 
