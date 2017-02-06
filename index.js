@@ -89,5 +89,5 @@ module.exports = fn => {
 
 	const match = reFnArgs.exec(fnND);
 
-	return match ? (match[1] || match[2]).split(',').map(el => el.trim()) : [];
+	return match ? (match[1] || match[2]).split(',').map(x => x.trim()) : [];
 };
