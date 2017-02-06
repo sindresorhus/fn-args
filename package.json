@@ -13,8 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "index": "node index.js",
-    "test": "mocha --harmony"
+    "test": "xo && mocha --harmony"
   },
   "files": [
     "index.js"
