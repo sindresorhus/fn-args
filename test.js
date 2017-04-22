@@ -1,13 +1,11 @@
-'use strict';
-/* eslint-env mocha */
-const assert = require('assert');
-const semver = require('semver');
-const m = require('./');
+import test from 'ava';
+import semver from 'semver';
+import m from '.';
 
-it('function', () => {
-	assert.deepEqual(m(function (foo, bar) {}), ['foo', 'bar']);
+test('function', t => {
+	t.deepEqual(m(function (foo, bar) {}), ['foo', 'bar']);
 
-	assert.deepEqual(m(function /* something */may(
+	t.deepEqual(m(function /* something */may(
 		// go,
 		go,
 		/* wrong, */
@@ -15,14 +13,14 @@ it('function', () => {
 		// (when, using, comments) {}
 	){}), ['go', 'here']);
 
-	assert.deepEqual(m(function () {}), []);
-	assert.deepEqual(m(function(){console.log('hello')}), []);
+	t.deepEqual(m(function () {}), []);
+	t.deepEqual(m(function(){console.log('hello')}), []);
 });
 
-it('generator function', () => {
-	assert.deepEqual(m(function * (foo, bar) {}), ['foo', 'bar']);
+test('generator function', t => {
+	t.deepEqual(m(function * (foo, bar) {}), ['foo', 'bar']);
 
-	assert.deepEqual(m(function* /* something */may(
+	t.deepEqual(m(function* /* something */may(
 		// go,
 		go,
 		/* wrong, */
@@ -30,16 +28,16 @@ it('generator function', () => {
 		// (when, using, comments) {}
 	){}), ['go', 'here']);
 
-	assert.deepEqual(m(function* () {}), []);
-	assert.deepEqual(m(function*(){console.log('hello')}), []);
+	t.deepEqual(m(function* () {}), []);
+	t.deepEqual(m(function*(){console.log('hello')}), []);
 });
 
-it('arrow function', () => {
-	assert.deepEqual(m((foo, bar) => {}), ['foo', 'bar']);
-	assert.deepEqual(m(( foo ) => {}), ['foo']);
-	assert.deepEqual(m(foo=>{}), ['foo']);
+test('arrow function', t => {
+	t.deepEqual(m((foo, bar) => {}), ['foo', 'bar']);
+	t.deepEqual(m(( foo ) => {}), ['foo']);
+	t.deepEqual(m(foo=>{}), ['foo']);
 
-	assert.deepEqual(m(/* something */(
+	t.deepEqual(m(/* something */(
 		// go,
 		go,
 		/* wrong, */
@@ -47,33 +45,16 @@ it('arrow function', () => {
 		// (when, using, comments) {}
 	)=>{}), ['go', 'here']);
 
-	assert.deepEqual(m(() => {}), []);
-	assert.deepEqual(m(()=>{console.log('hello')}), []);
+	t.deepEqual(m(() => {}), []);
+	t.deepEqual(m(()=>{console.log('hello')}), []);
 });
 
-it('throws if wrong type', () => {
-	assert.throws(() => {
+test('throws if wrong type', t => {
+	t.throws(() => {
 		m('');
 	});
 });
 
-it('rest parameter', () => {
-	assert.deepEqual(m((...args) => {}), ['...args']);
-	assert.deepEqual(m((arg1, arg2,...args) => {}), ['arg1', 'arg2', '...args']);
-});
-
-/*it('removes default values', () => { TODO uncomment (Your compiler can't deal with default parameters)
-	assert.deepEqual(m((foo = 2, bar = false) => {}), ['foo', 'bar']);
-	assert.deepEqual(m((foo = {
-		key1 : [1, 2, 3],
-		key2 : [4, 5, 6]
-	}, bar = "(, , , )") => {}), ['foo', 'bar']);
-
-	assert.deepEqual(m((foo = ")", bar) => {}), ['foo', 'bar']);
-	assert.deepEqual(m((foo = `${"test"}`, bar={str:'?" " " ", , '}) => {}), ['foo', 'bar']);
-	assert.deepEqual(m((foo = /\w\W\w/gi) => {}), ['foo']);
-});*/
-
 if (semver.gt(process.versions.node, '7.0.0')) {
-	require('./test-async');
+	require('./test-newer');
 }
