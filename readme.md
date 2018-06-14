@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save fn-args
+$ npm install fn-args
 ```
 
 

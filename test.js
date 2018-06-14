@@ -49,6 +49,23 @@ test('arrow function', t => {
 	t.deepEqual(m(()=>{console.log('hello')}), []);
 });
 
+test('rest parameters', t => {
+	t.deepEqual(m((...args) => {}), ['...args']);
+	t.deepEqual(m((arg1, arg2,...args) => {}), ['arg1', 'arg2', '...args']);
+});
+
+test('default parameters', t => {
+	t.deepEqual(m((foo = 2, bar = false) => {}), ['foo', 'bar']);
+	t.deepEqual(m((foo = {
+		key1: [1, 2, 3],
+		key2: [4, 5, 6]
+	}, bar = '(, , , )') => {}), ['foo', 'bar']);
+
+	t.deepEqual(m((foo = ')', bar) => {}), ['foo', 'bar']);
+	t.deepEqual(m((foo = `${'test'}`, bar={str:'?" " " ", , '}) => {}), ['foo', 'bar']);
+	t.deepEqual(m((foo = /\w\W\w/gi) => {}), ['foo']);
+});
+
 test('throws if wrong type', t => {
 	t.throws(() => {
 		m('');
