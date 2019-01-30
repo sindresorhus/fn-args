@@ -7,6 +7,11 @@ test('async function', t => {
 	t.deepEqual(m(async (foo, bar) => {}), ['foo', 'bar']);
 	t.deepEqual(m(async foo => {}), ['foo']);
 
+	t.deepEqual(m(async (
+		trailing,
+		comma,
+	) => {}), ['trailing', 'comma']);
+
 	t.deepEqual(m(async function /* something */may(
 		// go,
 		go,
