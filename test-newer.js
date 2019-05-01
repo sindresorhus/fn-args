@@ -1,18 +1,18 @@
 'use strict';
 const test = require('ava');
-const fnArgs = require('.');
+const functionArguments = require('.');
 
 test('async function', t => {
-	t.deepEqual(fnArgs(async function (foo, bar) {}), ['foo', 'bar']);
-	t.deepEqual(fnArgs(async (foo, bar) => {}), ['foo', 'bar']);
-	t.deepEqual(fnArgs(async foo => {}), ['foo']);
+	t.deepEqual(functionArguments(async function (foo, bar) {}), ['foo', 'bar']);
+	t.deepEqual(functionArguments(async (foo, bar) => {}), ['foo', 'bar']);
+	t.deepEqual(functionArguments(async foo => {}), ['foo']);
 
-	t.deepEqual(fnArgs(async (
+	t.deepEqual(functionArguments(async (
 		trailing,
 		comma,
 	) => {}), ['trailing', 'comma']);
 
-	t.deepEqual(fnArgs(async function /* something */may(
+	t.deepEqual(functionArguments(async function /* something */may(
 		// go,
 		go,
 		/* wrong, */
@@ -20,6 +20,6 @@ test('async function', t => {
 		// (when, using, comments) {}
 	){}), ['go', 'here']);
 
-	t.deepEqual(fnArgs(async function () {}), []);
-	t.deepEqual(fnArgs(async function(){console.log('hello')}), []);
+	t.deepEqual(functionArguments(async function () {}), []);
+	t.deepEqual(functionArguments(async function(){console.log('hello')}), []);
 });
