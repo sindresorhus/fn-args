@@ -4,38 +4,38 @@ module.exports = fn => {
 		throw new TypeError('Expected a function');
 	}
 
-	const reComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+	const regexComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
 	const quotes = ['`', '"', '\''];
 
-	const fnNC = fn.toString().replace(reComments, ''); // Function with no comments
+	const fnNoComments = fn.toString().replace(regexComments, ''); // Function with no comments
 
 	let depth = 0; // () [] {}
-	let fnND = ''; // Function with no default values
+	let fnNoDefaults = ''; // Function with no default values
 	let i = 0;
 
 	// To remove default values we can not use regexp because finite automaton can not handle such
 	// things as (potential) infinity-nested blocks (), [], {}
 
 	// Remove default values
-	for (; i < fnNC.length && fnNC.charAt(i) !== ')'; i += 1) {
+	for (; i < fnNoComments.length && fnNoComments.charAt(i) !== ')'; i += 1) {
 		// Exiting if an arrow occurs. Needed when arrow function without '()'.
-		if (fnNC.startsWith('=>', i)) {
-			fnND = fnNC;
-			i = fnNC.length;
+		if (fnNoComments.startsWith('=>', i)) {
+			fnNoDefaults = fnNoComments;
+			i = fnNoComments.length;
 			break;
 		}
 
 		// If we found a default value - skip it
-		if (fnNC.charAt(i) === '=') {
-			for (; i < fnNC.length && ((fnNC.charAt(i) !== ',' && fnNC.charAt(i) !== ')') || depth !== 0); i += 1) {
+		if (fnNoComments.charAt(i) === '=') {
+			for (; i < fnNoComments.length && ((fnNoComments.charAt(i) !== ',' && fnNoComments.charAt(i) !== ')') || depth !== 0); i += 1) {
 				// Skip all quotes
 				let wasQuote = false;
 
 				for (let j = 0; j < quotes.length; j += 1) {
-					if (fnNC.charAt(i) === quotes[j]) {
+					if (fnNoComments.charAt(i) === quotes[j]) {
 						i += 1;
 
-						for (; i < fnNC.length && fnNC.charAt(i) !== quotes[j];) {
+						for (; i < fnNoComments.length && fnNoComments.charAt(i) !== quotes[j];) {
 							i += 1;
 						}
 
@@ -49,7 +49,7 @@ module.exports = fn => {
 					continue;
 				}
 
-				switch (fnNC.charAt(i)) { // Keeps correct depths of all types of parenthesises
+				switch (fnNoComments.charAt(i)) { // Keeps correct depths of all types of parenthesises
 					case '(':
 					case '[':
 					case '{':
@@ -64,28 +64,28 @@ module.exports = fn => {
 				}
 			}
 
-			if (fnNC.charAt(i) === ',') {
-				fnND += ',';
+			if (fnNoComments.charAt(i) === ',') {
+				fnNoDefaults += ',';
 			}
 
-			if (fnNC.charAt(i) === ')') { // Quits from the cycle immediately
-				fnND += ')';
+			if (fnNoComments.charAt(i) === ')') { // Quits from the cycle immediately
+				fnNoDefaults += ')';
 				break;
 			}
 		} else {
-			fnND += fnNC.charAt(i);
+			fnNoDefaults += fnNoComments.charAt(i);
 		}
 	}
 
-	if (i < fnNC.length && fnNC.charAt(i) === ')') {
-		fnND += ')';
+	if (i < fnNoComments.length && fnNoComments.charAt(i) === ')') {
+		fnNoDefaults += ')';
 	}
 
 	// The first part matches parens-less arrow functions
 	// The second part matches the rest
-	const reFnArgs = /^(?:async)?([^=()]+)=|\(([^)]+)\)/;
+	const regexFnArguments = /^(?:async)?([^=()]+)=|\(([^)]+)\)/;
 
-	const match = reFnArgs.exec(fnND);
+	const match = regexFnArguments.exec(fnNoDefaults);
 
 	return match ? (match[1] || match[2]).split(',').map(x => x.trim()).filter(Boolean) : [];
 };

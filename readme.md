@@ -13,18 +13,18 @@ $ npm install fn-args
 ## Usage
 
 ```js
-const fnArgs = require('fn-args');
+const functionArguments = require('fn-args');
 
-fnArgs(function (foo, bar) {});
+functionArguments(function (foo, bar) {});
 //=> ['foo', 'bar']
 
-fnArgs((foo, bar) => {});
+functionArguments((foo, bar) => {});
 //=> ['foo', 'bar']
 
-fnArgs(function * (foo, bar) {});
+functionArguments(function * (foo, bar) {});
 //=> ['foo', 'bar']
 
-fnArgs(async function (foo, bar) {});
+functionArguments(async function (foo, bar) {});
 //=> ['foo', 'bar']
 ```
 
