@@ -4,10 +4,10 @@ module.exports = fn => {
 		throw new TypeError('Expected a function');
 	}
 
-	const regexComments = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+	const commentRegex = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
 	const quotes = ['`', '"', '\''];
 
-	const fnNoComments = fn.toString().replace(regexComments, ''); // Function with no comments
+	const functionSource = fn.toString().replace(commentRegex, ''); // Function with no comments
 
 	let depth = 0; // () [] {}
 	let fnNoDefaults = ''; // Function with no default values
@@ -17,25 +17,25 @@ module.exports = fn => {
 	// things as (potential) infinity-nested blocks (), [], {}
 
 	// Remove default values
-	for (; i < fnNoComments.length && fnNoComments.charAt(i) !== ')'; i += 1) {
+	for (; i < functionSource.length && functionSource.charAt(i) !== ')'; i += 1) {
 		// Exiting if an arrow occurs. Needed when arrow function without '()'.
-		if (fnNoComments.startsWith('=>', i)) {
-			fnNoDefaults = fnNoComments;
-			i = fnNoComments.length;
+		if (functionSource.startsWith('=>', i)) {
+			fnNoDefaults = functionSource;
+			i = functionSource.length;
 			break;
 		}
 
 		// If we found a default value - skip it
-		if (fnNoComments.charAt(i) === '=') {
-			for (; i < fnNoComments.length && ((fnNoComments.charAt(i) !== ',' && fnNoComments.charAt(i) !== ')') || depth !== 0); i += 1) {
+		if (functionSource.charAt(i) === '=') {
+			for (; i < functionSource.length && ((functionSource.charAt(i) !== ',' && functionSource.charAt(i) !== ')') || depth !== 0); i += 1) {
 				// Skip all quotes
 				let wasQuote = false;
 
 				for (let j = 0; j < quotes.length; j += 1) {
-					if (fnNoComments.charAt(i) === quotes[j]) {
+					if (functionSource.charAt(i) === quotes[j]) {
 						i += 1;
 
-						for (; i < fnNoComments.length && fnNoComments.charAt(i) !== quotes[j];) {
+						for (; i < functionSource.length && functionSource.charAt(i) !== quotes[j];) {
 							i += 1;
 						}
 
@@ -49,7 +49,7 @@ module.exports = fn => {
 					continue;
 				}
 
-				switch (fnNoComments.charAt(i)) { // Keeps correct depths of all types of parenthesises
+				switch (functionSource.charAt(i)) { // Keeps correct depths of all types of parenthesises
 					case '(':
 					case '[':
 					case '{':
@@ -64,20 +64,20 @@ module.exports = fn => {
 				}
 			}
 
-			if (fnNoComments.charAt(i) === ',') {
+			if (functionSource.charAt(i) === ',') {
 				fnNoDefaults += ',';
 			}
 
-			if (fnNoComments.charAt(i) === ')') { // Quits from the cycle immediately
+			if (functionSource.charAt(i) === ')') { // Quits from the cycle immediately
 				fnNoDefaults += ')';
 				break;
 			}
 		} else {
-			fnNoDefaults += fnNoComments.charAt(i);
+			fnNoDefaults += functionSource.charAt(i);
 		}
 	}
 
-	if (i < fnNoComments.length && fnNoComments.charAt(i) === ')') {
+	if (i < functionSource.length && functionSource.charAt(i) === ')') {
 		fnNoDefaults += ')';
 	}
 
