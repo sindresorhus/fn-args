@@ -1,4 +1,4 @@
-# fn-args [![Build Status](https://travis-ci.org/sindresorhus/fn-args.svg?branch=master)](https://travis-ci.org/sindresorhus/fn-args)
+# fn-args
 
 > Get the arguments of a function, arrow function, generator function, async function
 
