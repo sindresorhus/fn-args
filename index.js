@@ -1,42 +1,41 @@
-'use strict';
-module.exports = fn => {
-	if (typeof fn !== 'function') {
+export default function functionArguments(function_) {
+	if (typeof function_ !== 'function') {
 		throw new TypeError('Expected a function');
 	}
 
-	const commentRegex = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+	const commentRegex = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/gm;
 	const quotes = ['`', '"', '\''];
 
-	const functionSource = fn.toString().replace(commentRegex, ''); // Function with no comments
+	const functionSource = function_.toString().replace(commentRegex, ''); // Function with no comments
 
+	let functionWithNoDefaults = '';
 	let depth = 0; // () [] {}
-	let fnNoDefaults = ''; // Function with no default values
-	let i = 0;
+	let index = 0;
 
 	// To remove default values we can not use regexp because finite automaton can not handle such
 	// things as (potential) infinity-nested blocks (), [], {}
 
 	// Remove default values
-	for (; i < functionSource.length && functionSource.charAt(i) !== ')'; i += 1) {
+	for (; index < functionSource.length && functionSource.charAt(index) !== ')'; index += 1) {
 		// Exiting if an arrow occurs. Needed when arrow function without '()'.
-		if (functionSource.startsWith('=>', i)) {
-			fnNoDefaults = functionSource;
-			i = functionSource.length;
+		if (functionSource.startsWith('=>', index)) {
+			functionWithNoDefaults = functionSource;
+			index = functionSource.length;
 			break;
 		}
 
 		// If we found a default value - skip it
-		if (functionSource.charAt(i) === '=') {
-			for (; i < functionSource.length && ((functionSource.charAt(i) !== ',' && functionSource.charAt(i) !== ')') || depth !== 0); i += 1) {
+		if (functionSource.charAt(index) === '=') {
+			for (; index < functionSource.length && ((functionSource.charAt(index) !== ',' && functionSource.charAt(index) !== ')') || depth !== 0); index += 1) {
 				// Skip all quotes
 				let wasQuote = false;
 
-				for (let j = 0; j < quotes.length; j += 1) {
-					if (functionSource.charAt(i) === quotes[j]) {
-						i += 1;
+				for (const quote of quotes) {
+					if (functionSource.charAt(index) === quote) {
+						index += 1;
 
-						for (; i < functionSource.length && functionSource.charAt(i) !== quotes[j];) {
-							i += 1;
+						for (; index < functionSource.length && functionSource.charAt(index) !== quote;) {
+							index += 1;
 						}
 
 						wasQuote = true;
@@ -49,7 +48,7 @@ module.exports = fn => {
 					continue;
 				}
 
-				switch (functionSource.charAt(i)) { // Keeps correct depths of all types of parenthesises
+				switch (functionSource.charAt(index)) { // Keeps correct depths of all types of parenthesises
 					case '(':
 					case '[':
 					case '{':
@@ -64,28 +63,28 @@ module.exports = fn => {
 				}
 			}
 
-			if (functionSource.charAt(i) === ',') {
-				fnNoDefaults += ',';
+			if (functionSource.charAt(index) === ',') {
+				functionWithNoDefaults += ',';
 			}
 
-			if (functionSource.charAt(i) === ')') { // Quits from the cycle immediately
-				fnNoDefaults += ')';
+			if (functionSource.charAt(index) === ')') { // Quits from the cycle immediately
+				functionWithNoDefaults += ')';
 				break;
 			}
 		} else {
-			fnNoDefaults += functionSource.charAt(i);
+			functionWithNoDefaults += functionSource.charAt(index);
 		}
 	}
 
-	if (i < functionSource.length && functionSource.charAt(i) === ')') {
-		fnNoDefaults += ')';
+	if (index < functionSource.length && functionSource.charAt(index) === ')') {
+		functionWithNoDefaults += ')';
 	}
 
 	// The first part matches parens-less arrow functions
 	// The second part matches the rest
 	const regexFnArguments = /^(?:async)?([^=()]+)=|\(([^)]+)\)/;
 
-	const match = regexFnArguments.exec(fnNoDefaults);
+	const match = regexFnArguments.exec(functionWithNoDefaults);
 
 	return match ? (match[1] || match[2]).split(',').map(x => x.trim()).filter(Boolean) : [];
-};
+}

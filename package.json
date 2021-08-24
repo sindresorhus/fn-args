@@ -4,13 +4,16 @@
 	"description": "Get the arguments of a function, arrow function, generator function, async function",
 	"license": "MIT",
 	"repository": "sindresorhus/fn-args",
+	"funding": "https://github.com/sponsors/sindresorhus",
 	"author": {
 		"name": "Sindre Sorhus",
 		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
+		"url": "https://sindresorhus.com"
 	},
+	"type": "module",
+	"exports": "./index.js",
 	"engines": {
-		"node": ">=8"
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
 	},
 	"scripts": {
 		"test": "xo && ava test.js && tsd"
@@ -30,22 +33,15 @@
 		"arrow"
 	],
 	"devDependencies": {
-		"ava": "^1.4.1",
-		"esm": "^3.2.22",
-		"semver": "^6.0.0",
-		"tsd": "^0.7.2",
-		"xo": "^0.24.0"
+		"ava": "^3.15.0",
+		"esm": "^3.2.25",
+		"semver": "^7.3.5",
+		"tsd": "^0.17.0",
+		"xo": "^0.44.0"
 	},
 	"xo": {
 		"ignores": [
 			"test*.js"
-		]
-	},
-	"ava": {
-		"babel": false,
-		"compileEnhancements": false,
-		"require": [
-			"esm"
 		]
 	}
 }

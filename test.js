@@ -1,6 +1,5 @@
 import test from 'ava';
-import semver from 'semver';
-import functionArguments from '.';
+import functionArguments from './index.js';
 
 test('function', t => {
 	t.deepEqual(functionArguments(function (foo, bar) {}), ['foo', 'bar']);

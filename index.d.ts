@@ -3,7 +3,7 @@ Get the arguments of a function, arrow function, generator function, async funct
 
 @example
 ```
-import functionArguments = require('fn-args');
+import functionArguments from 'fn-args';
 
 functionArguments(function (foo, bar) {});
 //=> ['foo', 'bar']
@@ -18,8 +18,6 @@ functionArguments(async function (foo, bar) {});
 //=> ['foo', 'bar']
 ```
 */
-declare function functionArguments(
-	fn: (...arguments: any[]) => unknown
+export default function functionArguments(
+	function_: (...arguments: any[]) => any
 ): string[];
-
-export = functionArguments;

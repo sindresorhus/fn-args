@@ -2,18 +2,16 @@
 
 > Get the arguments of a function, arrow function, generator function, async function
 
-
 ## Install
 
 ```
 $ npm install fn-args
 ```
 
-
 ## Usage
 
 ```js
-const functionArguments = require('fn-args');
+import functionArguments from 'fn-args';
 
 functionArguments(function (foo, bar) {});
 //=> ['foo', 'bar']
@@ -27,8 +25,3 @@ functionArguments(function * (foo, bar) {});
 functionArguments(async function (foo, bar) {});
 //=> ['foo', 'bar']
 ```
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
