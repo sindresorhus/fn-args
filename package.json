@@ -1,6 +1,6 @@
 {
 	"name": "fn-args",
-	"version": "5.0.0",
+	"version": "6.0.0",
 	"description": "Get the arguments of a function, arrow function, generator function, async function",
 	"license": "MIT",
 	"repository": "sindresorhus/fn-args",
